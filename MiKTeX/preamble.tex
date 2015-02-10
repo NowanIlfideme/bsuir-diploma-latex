@@ -191,6 +191,18 @@
 \usepackage[nooneline]{caption}
 \usepackage{subcaption}
 
+% Зачем: чтобы работала \No в новых латехах
+\DeclareRobustCommand{\No}{\ifmmode{\nfss@text{\textnumero}}\else\textnumero\fi}
+
+% Зачем: поворот ячеек таблиц на 90 градусов
+\usepackage{rotating}
+\DeclareRobustCommand{\povernut}[1]{\begin{sideways}{#1}\end{sideways}}
+
+
+% Зачем: когда в формулах много кириллических символов команда \text{} занимает много места
+\DeclareRobustCommand{\x}[1]{\text{#1}}
+
+
 % Зачем: Задание подписей, разделителя и нумерации частей рисунков
 % Почему: Пункт 2.5.5 Требований по оформлению пояснительной записки.
 \DeclareCaptionLabelFormat{stbfigure}{Рисунок \emph{#2}}
@@ -203,6 +215,27 @@
 
 % Зачем: Окружения для оформления формул
 % Почему: Пункт 2.4.7 требований по оформлению пояснительной записки и специфические требования различных кафедр
+% Пример использования смотри в course_content.tex, строка 5
+\usepackage{calc}
+\newlength{\lengthWordWhere}
+\settowidth{\lengthWordWhere}{где}
+\newenvironment{explanationx}
+    {
+    %%% Следующие строки определяют специфические требования кафедр. Раскоменнтируйте нужную строку
+    %% стандартный абзац, Кафедра информатики
+    \begin{itemize}[leftmargin=0cm, itemindent=\parindent + \lengthWordWhere + \labelsep, labelsep=\labelsep]
+
+    %% без отступа, Кафедра экономической информатики
+    %\begin{itemize}[leftmargin=0cm, itemindent=\lengthWordWhere + \labelsep , labelsep=\labelsep]
+
+    \renewcommand\labelitemi{}
+    }
+    {
+    \\[\parsep]
+    \end{itemize}
+    }
+
+% Старое окружение для "где". Сохранено для совместимости
 \usepackage{tabularx}
 
 \newenvironment{explanation}
@@ -414,6 +447,9 @@
 % Для использования знака градуса и других знаков
 % http://ctan.org/pkg/gensymb
 \usepackage{gensymb}
+
+% Зачем: преобразовывать текст в верхний регистр командой MakeTextUppercase
+\usepackage{textcase}
 
 % Зачем: Переносы в словах с тире.
 % Тире в словае заменяем на \hyph: аппаратно\hyphпрограммный.
